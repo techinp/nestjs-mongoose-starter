@@ -5,11 +5,8 @@ export interface IMongoError {
   message: string;
 }
 
-export interface IResponseErrors {
+export interface IResponse<T = void> {
   statusCode: number | IMongoError;
   message: string;
-}
-
-export interface IResponseSuccess<T> extends IResponseErrors {
-  data: T;
+  data?: T;
 }

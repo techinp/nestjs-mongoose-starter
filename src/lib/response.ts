@@ -1,11 +1,9 @@
-import {
-  IResponseSuccess,
-  IResponseErrors,
-  IMongoError,
-} from 'src/common/interfaces/response';
+import { IResponse } from 'src/common/interfaces/response';
+
+const SUCCESS_CODE = 0;
 
 export enum CodeError {
-  AuthLoginError = 100,
+  AuthLoginUsernameOrPasswordMismatch = 100,
   SomethingsError = 999,
   // No need message
   MongoError = 11000,
@@ -18,9 +16,9 @@ const MessageError = {
 
 export function Success<T>(
   data: T,
-  statusCode = 0,
+  statusCode = SUCCESS_CODE,
   message = 'Success',
-): IResponseSuccess<T> {
+): IResponse<T> {
   return {
     data,
     statusCode,
@@ -28,13 +26,15 @@ export function Success<T>(
   };
 }
 
-export function Error(statusCode: any, message?: string): IResponseErrors {
+export function Error(statusCode: any, message?: string): IResponse {
   if (statusCode.code === CodeError.MongoError) {
     return {
       statusCode: statusCode.code,
       message: statusCode.message,
     };
   }
+  console.log('statusCode', statusCode);
+  console.log('message : ', message || MessageError[statusCode]);
 
   return {
     statusCode,

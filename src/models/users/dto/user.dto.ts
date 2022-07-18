@@ -1,11 +1,11 @@
-import { IsString } from 'class-validator';
+import { IsString, IsEnum } from 'class-validator';
 
-export class UserDTO {
+export class BaseUserDTO {
   @IsString()
   username: string;
-}
 
-export class CreateUserDTO extends UserDTO {
   @IsString()
   password: string;
 }
+
+export class CreateUserDTO extends BaseUserDTO {}

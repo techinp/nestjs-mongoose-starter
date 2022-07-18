@@ -21,8 +21,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
         : HttpStatus.OK;
 
     response.status(status).json({
-      statusCode: exception.statusCode,
-      message: exception.message,
+      ...exception,
     });
   }
 }

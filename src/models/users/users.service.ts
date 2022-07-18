@@ -13,8 +13,12 @@ export class UserService {
   ) {}
 
   async findAll(): Promise<User[]> {
-    const user = await this.userModel.find().exec();
-    return user;
+    try {
+      const user = await this.userModel.find().lean().exec();
+      return user;
+    } catch (error) {
+      throw error;
+    }
   }
 
   async createMember(user: CreateUserDTO): Promise<User> {
