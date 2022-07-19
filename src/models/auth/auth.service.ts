@@ -4,15 +4,14 @@ import { Model } from 'mongoose';
 import { User, UserDocument } from '../users/users.schema';
 import { BaseUserDTO } from '../users/dto/user.dto';
 import { CodeError } from 'src/lib/response';
+import { UserService } from '../users/users.service';
 
 @Injectable()
 export class AuthService {
-  constructor(
-    @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
-  ) {}
+  constructor(private readonly usersService: UserService) {}
   async findOne(user: BaseUserDTO): Promise<User> {
     try {
-      const _user = await this.userModel.findOne({ username: user.username });
+      const _user = await this.usersService.findOne(user.username);
       if (_user && _user.comparePassword(user.password)) {
         return _user;
       }

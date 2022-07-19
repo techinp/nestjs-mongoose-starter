@@ -12,6 +12,16 @@ export class UserService {
     private configService: ConfigService,
   ) {}
 
+  async findOne(username: string): Promise<User> {
+    try {
+      const user = await this.userModel.findOne({ username }).exec();
+      return user;
+    } catch (error) {
+      console.log('error wkemfwkemf', error);
+      throw error;
+    }
+  }
+
   async findAll(): Promise<User[]> {
     try {
       const user = await this.userModel.find().lean().exec();
